@@ -1,0 +1,33 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "incremental": false
+  },
+  "include": [
+    "cloudflare-env.d.ts",
+    "app/**/*.ts",
+    "app/**/*.tsx",
+    "lib/**/*.ts",
+    "db/**/*.ts",
+    "cloudflare/**/*.ts",
+    "hooks/**/*.ts",
+    "components/**/*.tsx",
+    "next.config.ts",
+    "vite.config.ts",
+    "drizzle.config.ts",
+    "worker/**/*.ts",
+    "scripts/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "examples",
+    "dist",
+    ".vinext",
+    ".wrangler",
+    ".sites-runtime",
+    "outputs",
+    "work",
+    ".next",
+    "next-env.d.ts"
+  ]
+}

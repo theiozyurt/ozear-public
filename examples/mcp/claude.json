@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "ozear": {
+      "type": "http",
+      "url": "https://ozear.example/mcp",
+      "headers": { "Authorization": "Bearer ${OZEAR_MCP_CLAUDE_TOKEN}" }
+    }
+  }
+}

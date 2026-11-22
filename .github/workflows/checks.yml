@@ -1,0 +1,40 @@
+name: Ozear checks
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci --legacy-peer-deps
+      - run: npm run typecheck
+      - run: npm run lint
+      - run: npm run test:contracts
+      - run: npm run test:configuration
+      - run: node tests/gateway.mjs
+      - run: npm run test:auth
+      - run: python3 tests/sqlite.py
+      - run: npm run test:ui
+      - run: npm run test:d1
+      - run: npm run setup:local -- --prepare-only
+      - name: Verify the local setup
+        run: |
+          node scripts/run-framework.mjs dev > "$RUNNER_TEMP/ozear-local.log" 2>&1 &
+          server=$!
+          trap 'kill "$server" 2>/dev/null || true' EXIT
+          for attempt in {1..60}; do
+            if curl --silent --fail http://127.0.0.1:5173/signin-with-chatgpt -o /dev/null; then
+              npm run test:integration
+              exit $?
+            fi
+            if ! kill -0 "$server" 2>/dev/null; then break; fi
+            sleep 1
+          done
+          cat "$RUNNER_TEMP/ozear-local.log"
+          exit 1
+      - run: npm run build:vercel

@@ -1,0 +1,14 @@
+.git
+.env*
+!.env.example
+.dev.vars*
+.sites-runtime
+.wrangler
+.vercel
+dist
+.next
+node_modules
+outputs
+work
+cloudflare/.sites-runtime
+cloudflare/wrangler.json

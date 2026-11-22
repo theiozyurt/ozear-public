@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "ozear": {
+      "httpUrl": "https://ozear.example/mcp",
+      "headers": { "Authorization": "Bearer ${OZEAR_MCP_GEMINI_TOKEN}" }
+    }
+  }
+}
